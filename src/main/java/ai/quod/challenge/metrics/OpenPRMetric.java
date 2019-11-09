@@ -2,21 +2,19 @@ package ai.quod.challenge.metrics;
 
 import ai.quod.challenge.repo.RepoSummary;
 
-public class IssueOpenCloseMetric extends Metric {
-    public IssueOpenCloseMetric() {
-        super("issue_open_close_ratio");
+public class OpenPRMetric extends Metric {
+    public OpenPRMetric() {
+        super("num_open_pr");
     }
 
     @Override
     protected double computeScore(Long repoId, RepoSummary repoSummary) {
-        long o = repoSummary.getOpenIssues();
-        long c = repoSummary.getClosedIssues();
-        return c > 1 ? o / c : o;
+        return repoSummary.getOpenPRs();
     }
 
     @Override
     float getNormalizedScore(Long repoId) {
-        //lower the better
+        //Less number of PRs in Open state is better
         return 1 - super.getNormalizedScore(repoId);
     }
 }

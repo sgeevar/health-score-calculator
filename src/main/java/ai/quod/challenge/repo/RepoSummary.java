@@ -10,14 +10,15 @@ Metrics are computed on the these summaries. */
 public class RepoSummary {
     private String repoName;
     //Aggregate values from all the processed events
-    private long numberOfPullRequests;
-    private long numberOfCommentsOnPRs;
-    private long numberOfOpenIssues;
-    private long numberOfClosedIssues;
-    private long numberOfCommits;
-    private long numberOfReleases;
-    private long sumOfIssueOpenDuration;
-    private long sumOfPROpenTimes;
+    private long pullRequests;
+    private long mergedPullRequests;
+    private long commentsOnPR;
+    private long openIssues;
+    private long closedIssues;
+    private long commits;
+    private long releases;
+    private long totalIssueOpenDuration;
+    private long totalPROpenDuration;
     //Set of unique ids
     private Set<Long> developers;
     private Set<Long> contributors;
@@ -25,89 +26,129 @@ public class RepoSummary {
     private Set<Long> issueOpeners;
     RepoSummary(String repoName) {
         this.repoName = repoName;
-        this.numberOfPullRequests = 0;
-        this.numberOfCommentsOnPRs = 0;
-        this.numberOfOpenIssues = 0;
-        this.numberOfClosedIssues = 0;
-        this.numberOfCommits = 0;
-        this.numberOfReleases = 0;
-        this.sumOfIssueOpenDuration = 0;
-        this.sumOfPROpenTimes = 0;
+        this.pullRequests = 0;
+        this.commentsOnPR = 0;
+        this.openIssues = 0;
+        this.closedIssues = 0;
+        this.commits = 0;
+        this.releases = 0;
+        this.totalIssueOpenDuration = 0;
+        this.totalPROpenDuration = 0;
         this.developers = new HashSet<>();
         this.contributors = new HashSet<>();
         this.openPRs = new HashSet<>();
         this.issueOpeners = new HashSet<>();
     }
 
-    public long getSumOfIssueOpenDuration() {
-        return sumOfIssueOpenDuration;
+    public long getMergedPullRequests() {
+        return mergedPullRequests;
     }
 
-    public long getSumOfPROpenTimes() {
-        return sumOfPROpenTimes;
+    public long getTotalIssueOpenDuration() {
+        return totalIssueOpenDuration;
+    }
+
+    public long getTotalPROpenDuration() {
+        return totalPROpenDuration;
     }
 
     public String getRepoName() {
         return repoName;
     }
 
-    public long getNumberOfPullRequests() {
-        return numberOfPullRequests;
+    public long getPullRequests() {
+        return pullRequests;
     }
 
-    public long getNumberOfCommentsOnPRs() {
-        return numberOfCommentsOnPRs;
+    public long getCommentsOnPR() {
+        return commentsOnPR;
     }
 
-    public long getNumberOfOpenIssues() {
-        return numberOfOpenIssues;
+    public long getOpenIssues() {
+        return openIssues;
     }
 
-    public long getNumberOfClosedIssues() {
-        return numberOfClosedIssues;
+    public long getClosedIssues() {
+        return closedIssues;
     }
 
-    public long getNumberOfCommits() {
-        return numberOfCommits;
+    public long getCommits() {
+        return commits;
     }
 
-    public long getNumberOfReleases() {
-        return numberOfReleases;
+    public long getReleases() {
+        return releases;
     }
 
-    public void incNumberOfReleases() {
-        this.numberOfReleases++;
+    public void incReleases() {
+        releases++;
     }
 
-    public void incNumberOfCommits() {
-        this.numberOfCommits++;
+    public void incCommits() {
+        commits++;
     }
 
-    public void incNumberOfOpenIssues() {
-        this.numberOfOpenIssues++;
+    public void incOpenIssues() {
+        openIssues++;
     }
 
-    public void incNumberOfClosedssues() {
-        this.numberOfClosedIssues++;
+    public void incPullRequests() {
+        pullRequests++;
     }
 
-    public void incSumOfIssueOpenDuration(long h) {
-        this.sumOfIssueOpenDuration += h;
+    public void incMergedPullRequests() {
+        mergedPullRequests++;
+    }
+
+    public void incClosedIssues() {
+        closedIssues++;
+    }
+
+    public void incCommentsOnPR(long n) {
+        commentsOnPR += n;
+    }
+
+    public void incTotalIssueOpenDuration(long h) {
+        totalIssueOpenDuration += h;
+    }
+
+    public void incTotalPROpenDuration(long h) {
+        totalPROpenDuration += h;
     }
 
     public void addDeveloper(long id) {
-        this.developers.add(id);
+        developers.add(id);
     }
 
     public void addIssueOpener(long id) {
-        this.issueOpeners.add(id);
+        issueOpeners.add(id);
     }
 
-    public long getNumberOfDevelopers() {
+    public long getDevelopers() {
         return developers.size();
     }
 
     public long getIssueOpeners() {
         return issueOpeners.size();
+    }
+
+    public long getContributors() {
+        return contributors.size();
+    }
+
+    public void addContributor(long id) {
+        this.contributors.add(id);
+    }
+
+    public void addOpenPR(long id) {
+        openPRs.add(id);
+    }
+
+    public void removeOpenPR(long id) {
+        openPRs.remove(id);
+    }
+
+    public long getOpenPRs() {
+        return openPRs.size();
     }
 }

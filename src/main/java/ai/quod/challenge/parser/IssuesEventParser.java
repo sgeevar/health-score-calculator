@@ -12,17 +12,17 @@ public class IssuesEventParser extends EventParser {
     public void parse(RepoSummary repoSummary, JSONObject jsonObject) {
         String action = jsonObject.getJSONObject("payload").getString("action");
         if (action.compareTo("opened") == 0) {
-            repoSummary.incNumberOfOpenIssues();
+            repoSummary.incOpenIssues();
             repoSummary.addIssueOpener(jsonObject.getJSONObject("actor").getLong("id"));
         } else if (action.compareTo("closed") == 0) {
-            repoSummary.incNumberOfClosedssues();
+            repoSummary.incClosedIssues();
 
             JSONObject jo = jsonObject.getJSONObject("payload").getJSONObject("issue");
             Instant oTime = Utilities.parseISOTime(jo.getString("created_at"));
             Instant cTime = Utilities.parseISOTime(jo.getString("closed_at"));
             Duration d = Duration.between(oTime, cTime);
             //counting hours; over days minutes can overflow.
-            repoSummary.incSumOfIssueOpenDuration(d.toHours());
+            repoSummary.incTotalIssueOpenDuration(d.toHours());
         }
     }
 }

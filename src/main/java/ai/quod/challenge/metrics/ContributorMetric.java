@@ -2,13 +2,13 @@ package ai.quod.challenge.metrics;
 
 import ai.quod.challenge.repo.RepoSummary;
 
-public class CommitMetric extends Metric {
-    public CommitMetric() {
-        super("num_commits");
+public class ContributorMetric extends Metric {
+    public ContributorMetric() {
+        super("num_contributors");
     }
 
     @Override
     protected double computeScore(Long repoId, RepoSummary repoSummary) {
-        return repoSummary.getCommits();
+        return repoSummary.getContributors();
     }
 }

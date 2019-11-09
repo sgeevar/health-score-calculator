@@ -9,7 +9,7 @@ public class DeveloperCommitMetric extends Metric {
 
     @Override
     protected double computeScore(Long repoId, RepoSummary repoSummary) {
-        long n = repoSummary.getNumberOfDevelopers();
-        return n > 0 ? repoSummary.getNumberOfCommits() / n : 0;
+        long n = repoSummary.getDevelopers();
+        return n > 0 ? repoSummary.getCommits() / n : 0;
     }
 }

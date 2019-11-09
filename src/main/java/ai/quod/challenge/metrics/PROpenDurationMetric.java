@@ -2,15 +2,15 @@ package ai.quod.challenge.metrics;
 
 import ai.quod.challenge.repo.RepoSummary;
 
-public class IssueOpenDurationMetric extends Metric {
-    public IssueOpenDurationMetric() {
-        super("issue_open_duration");
+public class PROpenDurationMetric extends Metric {
+    public PROpenDurationMetric() {
+        super("pr_open_duration");
     }
 
     @Override
     protected double computeScore(Long repoId, RepoSummary repoSummary) {
-        long c = repoSummary.getClosedIssues();
-        return c > 0 ? repoSummary.getTotalIssueOpenDuration() / c : 0;
+        long n = repoSummary.getMergedPullRequests();
+        return n > 0 ? repoSummary.getTotalPROpenDuration() / n : 0;
     }
 
     @Override

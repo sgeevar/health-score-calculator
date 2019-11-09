@@ -1,10 +1,7 @@
 package ai.quod.challenge;
 
 import ai.quod.challenge.metrics.*;
-import ai.quod.challenge.parser.CommitCommentEventParser;
-import ai.quod.challenge.parser.IssuesEventParser;
-import ai.quod.challenge.parser.ParsingHelper;
-import ai.quod.challenge.parser.ReleaseEventParser;
+import ai.quod.challenge.parser.*;
 import ai.quod.challenge.repo.RepoSummary;
 import ai.quod.challenge.repo.RepoSummaryList;
 import ai.quod.challenge.utils.Utilities;
@@ -36,6 +33,7 @@ public class HealthScoreCalculator {
         parsingHelper.addEventParser("ReleaseEvent", new ReleaseEventParser());
         parsingHelper.addEventParser("CommitCommentEvent", new CommitCommentEventParser());
         parsingHelper.addEventParser("IssuesEvent", new IssuesEventParser());
+        parsingHelper.addEventParser("PullRequestEvent", new PullRequestEventParser());
 
         MetricsHelper metricsHelper = new MetricsHelper();
         metricsHelper.addMetrics(new ReleaseMetric());
@@ -44,6 +42,10 @@ public class HealthScoreCalculator {
         metricsHelper.addMetrics(new IssueOpenCloseMetric());
         metricsHelper.addMetrics(new IssueOpenerMetric());
         metricsHelper.addMetrics(new IssueOpenDurationMetric());
+        metricsHelper.addMetrics(new ContributorMetric());
+        metricsHelper.addMetrics(new PRCommentMetric());
+        metricsHelper.addMetrics(new OpenPRMetric());
+        metricsHelper.addMetrics(new PROpenDurationMetric());
 
         try {
             switch (args.length) {

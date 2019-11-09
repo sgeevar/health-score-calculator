@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class CommitCommentEventParser extends EventParser {
     @Override
     public void parse(RepoSummary repoSummary, JSONObject jsonObject) {
-        repoSummary.incNumberOfCommits();
+        repoSummary.incCommits();
         repoSummary.addDeveloper(jsonObject.getJSONObject("actor").getLong("id"));
     }
 }

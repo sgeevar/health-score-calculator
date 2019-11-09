@@ -84,4 +84,5 @@ actor/id,login
 
 10. Number of open pull requests  
 PullRequestEvent  
-actor/id,login when payload/action=opened/reopened and remove when action is closed  
+actor/id,login when payload/action=opened and remove when action is closed 
+number

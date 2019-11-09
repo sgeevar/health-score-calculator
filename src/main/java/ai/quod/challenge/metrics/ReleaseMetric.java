@@ -9,6 +9,6 @@ public class ReleaseMetric extends Metric {
 
     @Override
     protected double computeScore(Long repoId, RepoSummary repoSummary) {
-        return repoSummary.getNumberOfReleases();
+        return repoSummary.getReleases();
     }
 }
