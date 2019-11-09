@@ -17,6 +17,9 @@ What frameworks/libraries did you use? What are the benefits of those libraries?
 How would you improve your code for performance?  
 What code would you refactor for readability and maintainability?  
 1. Make Metrics loosely coupled with RepoSummery  
+2. Read topLimit from command line args
+3. Decouple the formatting for CSV from HealthSummary so that other formats can be
+supported in future.
 
 Assumptions
 -----------

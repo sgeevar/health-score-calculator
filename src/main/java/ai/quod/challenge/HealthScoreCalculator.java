@@ -11,7 +11,9 @@ import ai.quod.challenge.utils.Utilities;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
@@ -26,6 +28,7 @@ public class HealthScoreCalculator {
         //endTime is 10min before now, to avoid 404 scenarios due to GH delay
         Instant endTime = Instant.now().minus(Duration.ofMinutes(10));
         Instant startTime = endTime.minus(Duration.ofHours(1));
+        int topLimit = 1000;
 
         RepoSummaryList repoSummaryList = new RepoSummaryList();
 
@@ -90,9 +93,14 @@ public class HealthScoreCalculator {
         logger.info("Computing normalized metrics and overall score");
         ArrayList<HealthSummary> hs = metricsHelper.extractSummary();
 
-        System.out.println(hs.get(0).getHeaders());
-        for (int i = 0; i < 10; i++) {
-            System.out.println(hs.get(i).toString());
+        try (PrintWriter pw = new PrintWriter(new File("health_scores.csv"))) {
+            pw.write(hs.get(0).getHeaders());
+            for (int i = 0; i < topLimit; i++) {
+                pw.write(hs.get(i).toString());
+            }
+        } catch (Exception e) {
+            Utilities.displayError(e);
         }
+        logger.info("Done");
     }
 }

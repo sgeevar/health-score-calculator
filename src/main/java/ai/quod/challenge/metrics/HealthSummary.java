@@ -48,6 +48,7 @@ public class HealthSummary {
             sb.append(',');
             sb.append(s);
         }
+        sb.append("\n");
         return sb.toString();
     }
 
@@ -58,6 +59,7 @@ public class HealthSummary {
             sb.append(',');
             sb.append(d);
         }
+        sb.append("\n");
         return sb.toString();
     }
 }
