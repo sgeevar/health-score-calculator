@@ -20,6 +20,7 @@ What code would you refactor for readability and maintainability?
 2. Read topLimit from command line args
 3. Decouple the formatting for CSV from HealthSummary so that other formats can be
 supported in future.
+4. Improve the overall score computation with weights
 
 Assumptions
 -----------

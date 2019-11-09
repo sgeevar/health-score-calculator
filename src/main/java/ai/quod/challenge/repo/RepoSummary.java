@@ -71,4 +71,16 @@ public class RepoSummary {
     public void incNumberOfReleases(long count) {
         this.numberOfReleases += count;
     }
+
+    public void incNumberOfCommits(long count) {
+        this.numberOfCommits += count;
+    }
+
+    public void addDeveloper(long id) {
+        this.developers.add(id);
+    }
+
+    public long getNumberOfDevelopers() {
+        return developers.size();
+    }
 }

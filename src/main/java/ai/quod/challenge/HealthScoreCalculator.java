@@ -1,8 +1,7 @@
 package ai.quod.challenge;
 
-import ai.quod.challenge.metrics.HealthSummary;
-import ai.quod.challenge.metrics.MetricsHelper;
-import ai.quod.challenge.metrics.ReleaseMetric;
+import ai.quod.challenge.metrics.*;
+import ai.quod.challenge.parser.CommitCommentEventParser;
 import ai.quod.challenge.parser.ParsingHelper;
 import ai.quod.challenge.parser.ReleaseEventParser;
 import ai.quod.challenge.repo.RepoSummary;
@@ -34,9 +33,12 @@ public class HealthScoreCalculator {
 
         ParsingHelper parsingHelper = new ParsingHelper();
         parsingHelper.addEventParser("ReleaseEvent", new ReleaseEventParser());
+        parsingHelper.addEventParser("CommitCommentEvent", new CommitCommentEventParser());
 
         MetricsHelper metricsHelper = new MetricsHelper();
         metricsHelper.addMetrics(new ReleaseMetric());
+        metricsHelper.addMetrics(new CommitMetric());
+        metricsHelper.addMetrics(new DeveloperCommitMetric());
 
         try {
             switch (args.length) {
@@ -87,9 +89,11 @@ public class HealthScoreCalculator {
         ArrayList<Long> repoIdList = repoSummaryList.getRepoIds();
         logger.info("Computing metrics for [" + repoIdList.size() + "] repos");
         for (long id : repoIdList) {
+            // metricsHelper will iterate though all metrics and compute scores
             metricsHelper.addRepoSummary(id, repoSummaryList.get(id));
         }
 
+        //Now that we have all metrics, just need to normalize and compute overall score
         logger.info("Computing normalized metrics and overall score");
         ArrayList<HealthSummary> hs = metricsHelper.extractSummary();
 
