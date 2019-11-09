@@ -1,6 +1,7 @@
 package ai.quod.challenge;
 
 import ai.quod.challenge.utils.Utilities;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -50,8 +51,11 @@ public class HealthScoreCalculator {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(new GZIPInputStream(new URL(fileURL).openStream())));
                 String line;
+                JSONObject jo;
                 while ((line = br.readLine()) != null) {
-                    //System.out.println(line);
+                    jo = new JSONObject(line);
+                    System.out.println(jo.getString("type"));
+                    System.out.println(jo.getJSONObject("repo").getString("name"));
                 }
             } catch (Exception e) {
                 Utilities.displayError(e);
