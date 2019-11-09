@@ -2,6 +2,7 @@ package ai.quod.challenge;
 
 import ai.quod.challenge.metrics.*;
 import ai.quod.challenge.parser.CommitCommentEventParser;
+import ai.quod.challenge.parser.IssuesEventParser;
 import ai.quod.challenge.parser.ParsingHelper;
 import ai.quod.challenge.parser.ReleaseEventParser;
 import ai.quod.challenge.repo.RepoSummary;
@@ -34,11 +35,15 @@ public class HealthScoreCalculator {
         ParsingHelper parsingHelper = new ParsingHelper();
         parsingHelper.addEventParser("ReleaseEvent", new ReleaseEventParser());
         parsingHelper.addEventParser("CommitCommentEvent", new CommitCommentEventParser());
+        parsingHelper.addEventParser("IssuesEvent", new IssuesEventParser());
 
         MetricsHelper metricsHelper = new MetricsHelper();
         metricsHelper.addMetrics(new ReleaseMetric());
         metricsHelper.addMetrics(new CommitMetric());
         metricsHelper.addMetrics(new DeveloperCommitMetric());
+        metricsHelper.addMetrics(new IssueOpenCloseMetric());
+        metricsHelper.addMetrics(new IssueOpenerMetric());
+        metricsHelper.addMetrics(new IssueOpenDurationMetric());
 
         try {
             switch (args.length) {

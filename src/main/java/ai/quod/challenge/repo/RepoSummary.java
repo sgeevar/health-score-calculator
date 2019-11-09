@@ -16,14 +16,13 @@ public class RepoSummary {
     private long numberOfClosedIssues;
     private long numberOfCommits;
     private long numberOfReleases;
-    private long sumOfIssueOpenTimes;
+    private long sumOfIssueOpenDuration;
     private long sumOfPROpenTimes;
     //Set of unique ids
     private Set<Long> developers;
     private Set<Long> contributors;
     private Set<Long> openPRs;
     private Set<Long> issueOpeners;
-
     RepoSummary(String repoName) {
         this.repoName = repoName;
         this.numberOfPullRequests = 0;
@@ -32,12 +31,20 @@ public class RepoSummary {
         this.numberOfClosedIssues = 0;
         this.numberOfCommits = 0;
         this.numberOfReleases = 0;
-        this.sumOfIssueOpenTimes = 0;
+        this.sumOfIssueOpenDuration = 0;
         this.sumOfPROpenTimes = 0;
         this.developers = new HashSet<>();
         this.contributors = new HashSet<>();
         this.openPRs = new HashSet<>();
         this.issueOpeners = new HashSet<>();
+    }
+
+    public long getSumOfIssueOpenDuration() {
+        return sumOfIssueOpenDuration;
+    }
+
+    public long getSumOfPROpenTimes() {
+        return sumOfPROpenTimes;
     }
 
     public String getRepoName() {
@@ -68,19 +75,39 @@ public class RepoSummary {
         return numberOfReleases;
     }
 
-    public void incNumberOfReleases(long count) {
-        this.numberOfReleases += count;
+    public void incNumberOfReleases() {
+        this.numberOfReleases++;
     }
 
-    public void incNumberOfCommits(long count) {
-        this.numberOfCommits += count;
+    public void incNumberOfCommits() {
+        this.numberOfCommits++;
+    }
+
+    public void incNumberOfOpenIssues() {
+        this.numberOfOpenIssues++;
+    }
+
+    public void incNumberOfClosedssues() {
+        this.numberOfClosedIssues++;
+    }
+
+    public void incSumOfIssueOpenDuration(long h) {
+        this.sumOfIssueOpenDuration += h;
     }
 
     public void addDeveloper(long id) {
         this.developers.add(id);
     }
 
+    public void addIssueOpener(long id) {
+        this.issueOpeners.add(id);
+    }
+
     public long getNumberOfDevelopers() {
         return developers.size();
+    }
+
+    public long getIssueOpeners() {
+        return issueOpeners.size();
     }
 }

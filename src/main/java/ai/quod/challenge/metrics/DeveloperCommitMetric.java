@@ -12,9 +12,4 @@ public class DeveloperCommitMetric extends Metric {
         long n = repoSummary.getNumberOfDevelopers();
         return n > 0 ? repoSummary.getNumberOfCommits() / n : 0;
     }
-
-    @Override
-    protected float computeNormalizedScore(double score) {
-        return (float) (score / maxScore);
-    }
 }

@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Metric {
-    double minScore;
-    double maxScore;
+    private double minScore;
+    private double maxScore;
     private Map<Long, MetricScore> scoreMap;
     private String metricName;
 
@@ -24,7 +24,9 @@ public abstract class Metric {
 
     protected abstract double computeScore(Long repoId, RepoSummary repoSummary);
 
-    protected abstract float computeNormalizedScore(double score);
+    protected float computeNormalizedScore(double score) {
+        return (float) (score / maxScore);
+    }
 
     void addRepoSummary(Long repoId, RepoSummary repoSummary) {
         double s = computeScore(repoId, repoSummary);
