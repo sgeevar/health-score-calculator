@@ -1,5 +1,8 @@
 package ai.quod.challenge;
 
+import ai.quod.challenge.metrics.HealthSummary;
+import ai.quod.challenge.metrics.MetricsHelper;
+import ai.quod.challenge.metrics.ReleaseMetric;
 import ai.quod.challenge.parser.ParsingHelper;
 import ai.quod.challenge.parser.ReleaseEventParser;
 import ai.quod.challenge.repo.RepoSummary;
@@ -28,6 +31,9 @@ public class HealthScoreCalculator {
 
         ParsingHelper parsingHelper = new ParsingHelper();
         parsingHelper.addEventParser("ReleaseEvent", new ReleaseEventParser());
+
+        MetricsHelper metricsHelper = new MetricsHelper();
+        metricsHelper.addMetrics(new ReleaseMetric());
 
         try {
             switch (args.length) {
@@ -76,9 +82,17 @@ public class HealthScoreCalculator {
         }
 
         ArrayList<Long> repoIdList = repoSummaryList.getRepoIds();
+        logger.info("Computing metrics for [" + repoIdList.size() + "] repos");
         for (long id : repoIdList) {
-            RepoSummary rs = repoSummaryList.get(id);
-            System.out.println(rs.getRepoName() + "," + rs.getNumberOfReleases());
+            metricsHelper.addRepoSummary(id, repoSummaryList.get(id));
+        }
+
+        logger.info("Computing normalized metrics and overall score");
+        ArrayList<HealthSummary> hs = metricsHelper.extractSummary();
+
+        System.out.println(hs.get(0).getHeaders());
+        for (int i = 0; i < 10; i++) {
+            System.out.println(hs.get(i).toString());
         }
     }
 }

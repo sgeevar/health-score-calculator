@@ -16,6 +16,7 @@ Technical Discussions
 What frameworks/libraries did you use? What are the benefits of those libraries?  
 How would you improve your code for performance?  
 What code would you refactor for readability and maintainability?  
+1. Make Metrics loosely coupled with RepoSummery  
 
 Assumptions
 -----------
