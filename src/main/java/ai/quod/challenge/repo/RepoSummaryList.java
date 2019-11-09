@@ -11,17 +11,20 @@ public class RepoSummaryList {
         this.repoSummaryMap = new HashMap<>();
     }
 
-    public RepoSummary get(Long repoId) {
-        RepoSummary rs = repoSummaryMap.get(repoId);
+    public RepoSummary getOrCreate(Long repoId, String repoName) {
+        RepoSummary rs = get(repoId);
         if (rs == null) {
-            rs = new RepoSummary();
+            rs = new RepoSummary(repoName);
             repoSummaryMap.put(repoId, rs);
         }
         return rs;
     }
 
+    public RepoSummary get(Long repoId) {
+        return repoSummaryMap.get(repoId);
+    }
+
     public ArrayList<Long> getRepoIds() {
-        ArrayList<Long> sl = new ArrayList<>(repoSummaryMap.keySet());
-        return sl;
+        return new ArrayList<>(repoSummaryMap.keySet());
     }
 }

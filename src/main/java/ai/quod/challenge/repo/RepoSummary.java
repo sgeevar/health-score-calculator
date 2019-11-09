@@ -8,7 +8,7 @@ EventParser will process different events and populate the summary.
 Metrics are computed on the these summaries. */
 
 public class RepoSummary {
-    private String repo;
+    private String repoName;
     //Aggregate values from all the processed events
     private long numberOfPullRequests;
     private long numberOfCommentsOnPRs;
@@ -24,8 +24,8 @@ public class RepoSummary {
     private Set<Long> openPRs;
     private Set<Long> issueOpeners;
 
-    public RepoSummary() {
-        this.repo = "";
+    RepoSummary(String repoName) {
+        this.repoName = repoName;
         this.numberOfPullRequests = 0;
         this.numberOfCommentsOnPRs = 0;
         this.numberOfOpenIssues = 0;
@@ -40,8 +40,8 @@ public class RepoSummary {
         this.issueOpeners = new HashSet<>();
     }
 
-    public String getRepo() {
-        return repo;
+    public String getRepoName() {
+        return repoName;
     }
 
     public long getNumberOfPullRequests() {

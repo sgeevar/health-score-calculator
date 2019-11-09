@@ -1,5 +1,9 @@
 package ai.quod.challenge;
 
+import ai.quod.challenge.parser.ParsingHelper;
+import ai.quod.challenge.parser.ReleaseEventParser;
+import ai.quod.challenge.repo.RepoSummary;
+import ai.quod.challenge.repo.RepoSummaryList;
 import ai.quod.challenge.utils.Utilities;
 import org.json.JSONObject;
 
@@ -8,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 
@@ -18,6 +23,11 @@ public class HealthScoreCalculator {
         //endTime is 10min before now, to avoid 404 scenarios due to GH delay
         Instant endTime = Instant.now().minus(Duration.ofMinutes(10));
         Instant startTime = endTime.minus(Duration.ofHours(1));
+
+        RepoSummaryList repoSummaryList = new RepoSummaryList();
+
+        ParsingHelper parsingHelper = new ParsingHelper();
+        parsingHelper.addEventParser("ReleaseEvent", new ReleaseEventParser());
 
         try {
             switch (args.length) {
@@ -54,13 +64,21 @@ public class HealthScoreCalculator {
                 JSONObject jo;
                 while ((line = br.readLine()) != null) {
                     jo = new JSONObject(line);
-                    System.out.println(jo.getString("type"));
-                    System.out.println(jo.getJSONObject("repo").getString("name"));
+                    long repoId = jo.getJSONObject("repo").getLong("id");
+                    String repoName = jo.getJSONObject("repo").getString("name");
+                    RepoSummary rs = repoSummaryList.getOrCreate(repoId, repoName);
+                    parsingHelper.parse(rs, jo);
                 }
             } catch (Exception e) {
                 Utilities.displayError(e);
             }
             startTime = startTime.plus(Duration.ofHours(1));
+        }
+
+        ArrayList<Long> repoIdList = repoSummaryList.getRepoIds();
+        for (long id : repoIdList) {
+            RepoSummary rs = repoSummaryList.get(id);
+            System.out.println(rs.getRepoName() + "," + rs.getNumberOfReleases());
         }
     }
 }

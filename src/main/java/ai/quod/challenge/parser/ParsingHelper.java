@@ -11,9 +11,10 @@ public class ParsingHelper {
 
     public ParsingHelper() {
         this.parsers = new HashMap<>();
-        {
-            parsers.put("ReleaseEvent", new ReleaseEventParser());
-        }
+    }
+
+    public void addEventParser(String type, EventParser parser) {
+        this.parsers.put(type, parser);
     }
 
     public void parse(RepoSummary rs, JSONObject jo) {
