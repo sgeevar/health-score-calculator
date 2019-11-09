@@ -1,6 +1,8 @@
 package ai.quod.challenge.utils;
 
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 public final class Utilities {
     public static Instant parseISOTime(String timeString) {
@@ -16,5 +18,15 @@ public final class Utilities {
         sb.append("\n\nai.quod.challenge.HealthScoreCalculator");
         sb.append("\nHealth score for the last one hour\n");
         System.out.print(sb.toString());
+    }
+
+    public static String getGitHubFileURL(Instant time) {
+        String dateFormat = "YYYY-MM-dd-H";
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(dateFormat).withZone(ZoneOffset.UTC);
+        return "https://data.gharchive.org/" + df.format(time) + ".json.gz";
+    }
+
+    public static void displayError(Exception e) {
+        System.out.println("\nError: " + e.getMessage());
     }
 }

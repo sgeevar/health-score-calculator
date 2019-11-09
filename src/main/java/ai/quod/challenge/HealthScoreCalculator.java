@@ -2,9 +2,13 @@ package ai.quod.challenge;
 
 import ai.quod.challenge.utils.Utilities;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.logging.Logger;
+import java.util.zip.GZIPInputStream;
 
 public class HealthScoreCalculator {
     private static final Logger logger = Logger.getLogger(HealthScoreCalculator.class.getName());
@@ -28,10 +32,31 @@ public class HealthScoreCalculator {
 
             }
         } catch (Exception e) {
+            Utilities.displayError(e);
             Utilities.showUsage();
             return;
         }
 
+        if (endTime.compareTo(startTime) < 0) {
+            System.out.println("Error: Start time should be less than end time");
+            return;
+        }
+
         logger.info("startTime[" + startTime.toString() + "] endTime[" + endTime.toString() + "]");
+
+        while (startTime.compareTo(endTime) < 0) {
+            String fileURL = Utilities.getGitHubFileURL(startTime);
+            logger.info("Processing " + fileURL);
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(new GZIPInputStream(new URL(fileURL).openStream())));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    //System.out.println(line);
+                }
+            } catch (Exception e) {
+                Utilities.displayError(e);
+            }
+            startTime = startTime.plus(Duration.ofHours(1));
+        }
     }
 }

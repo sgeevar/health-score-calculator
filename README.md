@@ -21,3 +21,5 @@ Assumptions
 -----------
 1. There is a delay for new hourly files to be uploaded and to prevent 404
 errors using a 10min offset with default times.
+2. Since the whole 1 hour file is download and available to process, not
+discarding the events before the start time and after end time.
