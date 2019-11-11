@@ -14,13 +14,14 @@ Health score for the last one hour
 Technical Discussions
 ---------------------
 What frameworks/libraries did you use? What are the benefits of those libraries?  
+org.json : Provides JSON encoders/decoders in Java  
+
 How would you improve your code for performance?  
+
 What code would you refactor for readability and maintainability?  
-1. Make Metrics loosely coupled with RepoSummery  
-2. Read topLimit from command line args
-3. Decouple the formatting for CSV from HealthSummary so that other formats can be
-supported in future.
-4. Improve the overall score computation with weights
+1. Make Metrics loosely coupled with RepoSummery
+2. Decouple RepoSummery from Parsers by providing each parser its own data
+3. Modify RepoSummary as an aggregation of the individual classes mentioned above.
 
 Assumptions
 -----------

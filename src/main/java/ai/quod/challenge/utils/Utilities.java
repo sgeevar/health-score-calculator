@@ -1,14 +1,15 @@
 package ai.quod.challenge.utils;
 
+import ai.quod.challenge.metrics.HealthSummary;
+
+import java.io.File;
+import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public final class Utilities {
-    public static Instant parseISOTime(String timeString) {
-        return Instant.parse(timeString);
-    }
-
     public static void showUsage() {
         StringBuilder sb = new StringBuilder("Usage: ai.quod.challenge.HealthScoreCalculator [ISO_8601_datetime_start] [ISO_8601_datetime_end]");
         sb.append("\n\nai.quod.challenge.HealthScoreCalculator 2019-08-01T00:00:00Z 2019-09-01T00:00:00Z");
@@ -28,5 +29,16 @@ public final class Utilities {
 
     public static void displayError(Exception e) {
         System.out.println("\nError: " + e.getMessage());
+    }
+
+    public static void exportCSV(ArrayList<HealthSummary> hs) {
+        try (PrintWriter pw = new PrintWriter(new File("health_scores.csv"))) {
+            pw.write(hs.get(0).getHeaders());
+            for (int i = 0; i < 1000; i++) {
+                pw.write(hs.get(i).toString());
+            }
+        } catch (Exception e) {
+            displayError(e);
+        }
     }
 }

@@ -24,6 +24,7 @@ public class RepoSummary {
     private Set<Long> contributors;
     private Set<Long> openPRs;
     private Set<Long> issueOpeners;
+
     RepoSummary(String repoName) {
         this.repoName = repoName;
         this.pullRequests = 0;
