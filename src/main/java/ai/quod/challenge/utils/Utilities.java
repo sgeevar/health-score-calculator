@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public final class Utilities {
     public static void showUsage() {
-        StringBuilder sb = new StringBuilder("Usage: ai.quod.challenge.HealthScoreCalculator [ISO_8601_datetime_start] [ISO_8601_datetime_end]");
+        StringBuilder sb = new StringBuilder("\nUsage: ai.quod.challenge.HealthScoreCalculator [ISO_8601_datetime_start] [ISO_8601_datetime_end]");
         sb.append("\n\nai.quod.challenge.HealthScoreCalculator 2019-08-01T00:00:00Z 2019-09-01T00:00:00Z");
         sb.append("\nHealth score between 2019-08-01T00:00:00Z and 2019-09-01T00:00:00Z");
         sb.append("\n\nai.quod.challenge.HealthScoreCalculator 2019-08-01T00:00:00Z");

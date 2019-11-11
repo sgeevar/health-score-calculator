@@ -5,6 +5,9 @@ import ai.quod.challenge.repo.RepoSummary;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Base class for all Metrics. To add a new metric
+1. Extend this class and define the abstract method computeScore
+2. Configure the Metric in AppConfig */
 public abstract class Metric {
     private double minScore;
     private double maxScore;
@@ -24,12 +27,12 @@ public abstract class Metric {
 
     protected abstract double computeScore(Long repoId, RepoSummary repoSummary);
 
-    protected float computeNormalizedScore(double score) {
+    private float computeNormalizedScore(double score) {
         return (float) (score / maxScore);
     }
 
     void addRepoSummary(Long repoId, RepoSummary repoSummary) {
-        double s = computeScore(repoId, repoSummary);
+        double s = computeScore(repoId, repoSummary); //Compute based on metric specific implementation
         if (s < minScore)
             minScore = s;
         if (s > maxScore)

@@ -4,12 +4,11 @@ import ai.quod.challenge.metrics.*;
 import ai.quod.challenge.parser.*;
 
 /* Basic configuration for the Application. Ideally this should be populated
-via dependency injection (Ex Spring)
- */
+via dependency injection (Ex Spring) */
 public class AppConfig {
     private static AppConfig instance = null;
-    ParsingHelper parsingHelper;
-    MetricsHelper metricsHelper;
+    private ParsingHelper parsingHelper;
+    private MetricsHelper metricsHelper;
 
     private AppConfig() {
         parsingHelper = InitParsingHelper();
