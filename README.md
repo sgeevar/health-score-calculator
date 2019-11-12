@@ -17,6 +17,7 @@ What frameworks/libraries did you use? What are the benefits of those libraries?
 org.json : Provides JSON encoders/decoders in Java  
 
 How would you improve your code for performance?  
+1. Process multiple files in parallel and aggregate summaries.
 
 What code would you refactor for readability and maintainability?  
 1. Make Metrics loosely coupled with RepoSummery
